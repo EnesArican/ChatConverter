@@ -9,7 +9,7 @@ namespace ReportGenerator.Services
 {
     public class QuoteRewriterService : IQuoteRewriterService
     {
-        public void EditQuoteLines(List<string> lines, List<(int quoteIndex, int commaCount)> quoteDetails)
+        public List<string> EditQuoteLines(List<string> lines, List<(int quoteIndex, int commaCount)> quoteDetails)
         {
             var newLines = new List<string>();
 
@@ -34,13 +34,15 @@ namespace ReportGenerator.Services
             }
 
             Console.WriteLine("total number of lines: " + i);
+
+            return newLines;
         }
 
         private void MakeQuoteLine(int index, int commaCount, List<string> lines, List<string> newLines)
         {
             var line = lines[index];
 
-            var dash = "\n¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n";
+            var dash = "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
 
             var datetimeString = SC.MsjBeginRegex.Match(line).Groups[0].Value;
 
@@ -54,9 +56,18 @@ namespace ReportGenerator.Services
             if (quote.Length >= 25)
             {
                 var trimmedQuote = quote.Substring(0, 25);
-                var quoteEndPos = trimmedQuote.LastIndexOf(' ') == -1 ? 23 : trimmedQuote.LastIndexOf(' ');
+                var quoteEndPos = trimmedQuote.LastIndexOf(' '); //== -1 ? 23 : trimmedQuote.LastIndexOf(' ');
 
-                quote = $"{trimmedQuote.Substring(0, quoteEndPos)} ...";
+                if (quoteEndPos != -1) {
+                
+                    quote = $"{trimmedQuote.Substring(0, quoteEndPos)} ...";
+                }
+                else
+                {
+                    Console.WriteLine(trimmedQuote + "     " + index);
+                };
+
+
             }
 
             // Getting Message
@@ -65,9 +76,11 @@ namespace ReportGenerator.Services
             var msgEndPos = msgPrt.GetNthIndexFromEnd(',', commaCount + 2) - 1;
             var msg = msgPrt.Substring(1, msgEndPos);
 
-            var newLine = $"{datetimeString}{quote} {dash}{msg}";
+            var newQuoteLine = $"{datetimeString}{quote}";
 
-            newLines.Add(newLine);
+            newLines.Add(newQuoteLine);
+            newLines.Add(dash);
+            newLines.Add(msg);
         }
     }
 }

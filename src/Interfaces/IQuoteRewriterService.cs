@@ -4,6 +4,6 @@ namespace ReportGenerator.Interfaces
 {
     public interface IQuoteRewriterService
     {
-        void EditQuoteLines(List<string> lines, List<(int quoteIndex, int commaCount)> quoteDetails);
+        List<string> EditQuoteLines(List<string> lines, List<(int quoteIndex, int commaCount)> quoteDetails);
     }
 }

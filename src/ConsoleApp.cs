@@ -28,7 +28,9 @@ namespace ReportGenerator
 
             List<(int quoteIndex, int commaCount)> quoteDetails  = _dataReader.GetQuoteLineDetails(lines, quoteIndexes);
 
-            _dataWriter.EditQuoteLines(lines, quoteDetails);
+            var newLines = _dataWriter.EditQuoteLines(lines, quoteDetails);
+
+            _fileHandler.SaveLines(newLines);
 
         }
     }

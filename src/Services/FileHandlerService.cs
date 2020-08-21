@@ -1,6 +1,7 @@
 ﻿using ReportGenerator.Interfaces;
 using Syroot.Windows.IO;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SC = ReportGenerator.Constants.SystemConstant;
@@ -9,11 +10,10 @@ namespace ReportGenerator.Services
 {
     public class FileHandlerService : IFileHandlerService
     {
-       
-        
+       public readonly string downloadsPath = KnownFolders.Downloads.DefaultPath;
+
         public string FindChatFile()
         {
-            string downloadsPath = KnownFolders.Downloads.DefaultPath;
             Console.WriteLine("Downloads folder path: " + downloadsPath);
 
             var directory = new DirectoryInfo($"{downloadsPath}\\files");
@@ -25,11 +25,9 @@ namespace ReportGenerator.Services
 
        
 
-        public void SaveAndClose()
+        public void SaveLines(List<string> lines)
         {
-            //workbook.SaveAs(@"C:\Temp\test.xlsx", Local: true); ;
-            //workbook.Close();
-            //ExcelApp.Quit();
+            File.WriteAllLines($"{downloadsPath}\\files\\WriteText.txt", lines);
         }
     }
 }
