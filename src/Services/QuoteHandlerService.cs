@@ -15,11 +15,6 @@ namespace ReportGenerator.Services
         public int QuoteTotal { get; set; }
         public int MatchFoundTotal { get; set; }
 
-        public readonly Regex MsjBeginRegex = new Regex(@"\d.*,\s\d.*\s-\s.*:\s");
-
-        public readonly Regex quoteDateRemovalRegex = new Regex(@"(?<=\d\d\:\d\d\s\-\s(Aysen|Enes)\:)\s.*");
-
-
         public List<int> GetQuoteIndexes(List<string> lines)  
         {
             return lines.Select((value, index) => new { value, index })
@@ -105,7 +100,7 @@ namespace ReportGenerator.Services
             foreach (var index in lineIndexes)
             {
                 line = lines[index];
-                if (!MsjBeginRegex.IsMatch(line) && index != 0) 
+                if (!SC.MsjBeginRegex.IsMatch(line) && index != 0) 
                 {
                     var i = fixedLines.Count - 1;
                     fixedLines[i] = $"{fixedLines[i]} {line}"; 
@@ -122,7 +117,7 @@ namespace ReportGenerator.Services
 
         private int GetCommaCount(string originalLine, List<string> lines, int index) 
         {
-            var plainOriginalLine = quoteDateRemovalRegex.Match(originalLine).Groups[0].Value;
+            var plainOriginalLine = SC.quoteDateRemovalRegex.Match(originalLine).Groups[0].Value;
 
             // get number of commas in plain og line
             var commaCount = plainOriginalLine.Count(l => l == ',');

@@ -7,7 +7,7 @@ using SC = ReportGenerator.Constants.SystemConstant;
 
 namespace ReportGenerator.Services
 {
-    public class DataReaderService : IDataReaderService
+    public class FileHandlerService : IFileHandlerService
     {
        
         

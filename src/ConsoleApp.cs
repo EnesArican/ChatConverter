@@ -6,12 +6,12 @@ namespace ReportGenerator
     public class ConsoleApp
     {
         private readonly IQuoteHandlerService _dataReader;
-        private readonly IDataReaderService _fileHandler;
+        private readonly IFileHandlerService _fileHandler;
         private readonly IQuoteRewriterService _dataWriter;
 
 
         public ConsoleApp(IQuoteHandlerService dataReader,
-                          IDataReaderService fileHandler,
+                          IFileHandlerService fileHandler,
                           IQuoteRewriterService dataWriter) 
         {
             _dataReader = dataReader;

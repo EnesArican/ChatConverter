@@ -21,7 +21,7 @@ namespace ReportGenerator
         {
             IServiceCollection services = new ServiceCollection();
             services.AddTransient<ConsoleApp>();
-            services.AddSingleton<IDataReaderService, DataReaderService>();
+            services.AddSingleton<IFileHandlerService, FileHandlerService>();
             services.AddSingleton<IQuoteHandlerService, QuoteHandlerService>();
             services.AddSingleton<IQuoteRewriterService, QuoteRewriterService>();
             return services;
